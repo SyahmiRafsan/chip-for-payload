@@ -1,10 +1,10 @@
-import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { chipForPayload } from 'chip-for-payload'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
+import { postgresAdapter } from '@payloadcms/db-postgres'
 
 import { devUser } from './helpers/credentials.js'
 import { testEmailAdapter } from './helpers/testEmailAdapter.js'
@@ -37,8 +37,13 @@ export default buildConfig({
       },
     },
   ],
-  db: mongooseAdapter({
-    url: process.env.DATABASE_URI || '',
+  // Configure the Postgres adapter here
+  db: postgresAdapter({
+    // Postgres-specific arguments go here.
+    // `pool` is required.
+    pool: {
+      connectionString: process.env.DATABASE_URI,
+    },
   }),
   editor: lexicalEditor(),
   email: testEmailAdapter,
@@ -47,9 +52,9 @@ export default buildConfig({
   },
   plugins: [
     chipForPayload({
-      collections: {
-        posts: true,
-      },
+      // TODO: add your CHIP credentials here
+      // brandId: '',
+      // secretKey: '',
     }),
   ],
   secret: process.env.PAYLOAD_SECRET || 'test-secret_key',
