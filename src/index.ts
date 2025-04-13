@@ -7,13 +7,13 @@ import { successHandler } from './endpoints/successHandler.js'
 export type ChipForPayloadConfig = {
   /**
    * Your CHIP Brand ID for payment processing
-   * @example "brand_123abc"
+   * @example "f93c10f1-0641-4d6d-ba39-bdaf3c2ab3cb"
    */
   brandId?: string
 
   /**
    * Your CHIP Secret Key for API authentication
-   * @example "sk_test_123abc"
+   * @example "ASoxOlidFZvPGj1YG58TY2ya0lZfxdy57eddP5C9Ndwdh_snIYSkInSXj_tcc9PnuEkeErc75Hrvf8bgZzcWow=="
    */
   secretKey?: string
 
@@ -28,7 +28,14 @@ export type ChipForPayloadConfig = {
 export const chipForPayload =
   (pluginOptions: ChipForPayloadConfig) =>
   (config: Config): Config => {
-    config.globals = [...(config.globals || []), chipPaymentGlobal]
+    config.globals = [
+      ...(config.globals || []),
+      chipPaymentGlobal({
+        brandId: pluginOptions.brandId ?? '',
+        secretKey: pluginOptions.secretKey ?? '',
+        enabled: !pluginOptions.disabled,
+      }),
+    ]
 
     config.collections = [
       ...(config.collections || []),
@@ -76,12 +83,12 @@ export const chipForPayload =
       {
         handler: createPaymentEndpoint,
         method: 'post',
-        path: '/chip/create-payment',
+        path: '/chip/purchases/create',
       },
       {
         handler: successHandler,
         method: 'post',
-        path: '/chip/success-callback',
+        path: '/chip/callback/success',
       },
       {
         handler: webhookHandler,
@@ -94,11 +101,11 @@ export const chipForPayload =
       ...(config.admin || {}),
       components: {
         ...(config.admin?.components || {}),
-        beforeDashboard: [
-          ...(config.admin?.components?.beforeDashboard || []),
-          `chip-for-payload/client#BeforeDashboardClient`,
-          `chip-for-payload/rsc#BeforeDashboardServer`,
-        ],
+        // beforeDashboard: [
+        //   ...(config.admin?.components?.beforeDashboard || []),
+        //   `chip-for-payload/client#BeforeDashboardClient`,
+        //   `chip-for-payload/rsc#BeforeDashboardServer`,
+        // ],
       },
     }
 

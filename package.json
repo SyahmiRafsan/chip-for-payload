@@ -1,7 +1,14 @@
 {
   "name": "chip-for-payload",
   "version": "1.0.0",
-  "description": "A blank template to get started with Payload 3.0",
+  "description": "A PayloadCMS plugin for integrating CHIP payment processing, enabling seamless payment creation and handling",
+  "keywords": [
+    "payload-plugin",
+    "payloadcms",
+    "payload",
+    "payment",
+    "chip"
+  ],
   "license": "MIT",
   "type": "module",
   "exports": {

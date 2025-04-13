@@ -24,13 +24,18 @@ export class ChipClient {
       throw new Error('CHIP payments are not enabled')
     }
 
+    if (!this.brandId || !this.secretKey) {
+      throw new Error('CHIP brandId or secretKey is not set')
+    }
+
     const headers = {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${this.secretKey}`,
-      // 'X-Brand-ID': this.brandId,
     }
 
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
+    const url = new URL(`${this.baseUrl}${endpoint}`)
+
+    const response = await fetch(url.href, {
       ...options,
       headers: {
         ...headers,
@@ -46,14 +51,15 @@ export class ChipClient {
   }
 
   async createPurchase(request: ChipPurchaseRequest): Promise<ChipPurchaseResponse> {
-    return this.request('/purchases/create', {
+    return this.request('/purchases/', {
       method: 'POST',
       body: JSON.stringify({
         ...request,
+        brandId: this.brandId,
         currency: request.currency || 'MYR',
         success_callback:
           request.success_callback ||
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/chip/success-callback`,
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/chip/callback/success`,
         // TODO implement redirects, callbacks and webhooks
       }),
     })

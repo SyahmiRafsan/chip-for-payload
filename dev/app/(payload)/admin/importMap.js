@@ -1,9 +1,5 @@
-import { BeforeDashboardClient as BeforeDashboardClient_fc6e7dd366b9e2c8ce77d31252122343 } from 'plugin-package-name-placeholder/client'
-import { BeforeDashboardServer as BeforeDashboardServer_c4406fcca100b2553312c5a3d7520a3f } from 'plugin-package-name-placeholder/rsc'
+import { TestButton as TestButton_a5b26faa538a025cb379095d1f3d5c89 } from 'chip-for-payload/client'
 
 export const importMap = {
-  'plugin-package-name-placeholder/client#BeforeDashboardClient':
-    BeforeDashboardClient_fc6e7dd366b9e2c8ce77d31252122343,
-  'plugin-package-name-placeholder/rsc#BeforeDashboardServer':
-    BeforeDashboardServer_c4406fcca100b2553312c5a3d7520a3f,
+  "chip-for-payload/client#TestButton": TestButton_a5b26faa538a025cb379095d1f3d5c89
 }
