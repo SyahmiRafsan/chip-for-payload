@@ -9,6 +9,7 @@
     "payment",
     "chip"
   ],
+  "author": "Syahmi Rafsanjani",
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -31,7 +32,8 @@
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "scripts": {
     "build": "pnpm copyfiles && pnpm build:types && pnpm build:swc",
@@ -116,5 +118,9 @@
       "sharp"
     ]
   },
-  "registry": "https://registry.npmjs.org/"
+  "registry": "https://registry.npmjs.org/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/syahmirafsan/chip-for-payload.git"
+  }
 }
